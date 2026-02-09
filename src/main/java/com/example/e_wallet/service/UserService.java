@@ -29,11 +29,24 @@ public class UserService {
 
     public UserModels createUser(UserModels user){
 
+        if(userRepo.existsByEmail(user.getEmail())){
+            throw new RuntimeException("Email already exists");
+        }
+
+        if(userRepo.existsByPhoneNumber(user.getPhoneNumber())){
+            throw new RuntimeException("Phone number already exists");
+        }
+
+        if(userRepo.existsByUserName(user.getUserName())){
+            throw new RuntimeException("Username already exists");
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         WalletModel wallet = new WalletModel();
         wallet.setBalance(0);
         wallet.setUser(user);
         user.setWallet(wallet);
+
         return userRepo.save(user);
     }
 
@@ -53,6 +66,15 @@ public class UserService {
             throw new RuntimeException("User not found with id " + id);
         }
         userRepo.deleteById(id);
+    }
+
+    public UserModels login(String email, String password){
+        UserModels user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email " + email));
+        if(!passwordEncoder.matches(password,user.getPassword())){
+            throw new RuntimeException("Password doesn't match");
+        }
+        return user;
     }
 
 }

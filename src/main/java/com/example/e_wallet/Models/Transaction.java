@@ -22,7 +22,7 @@ public class Transaction {
     private  double Amount;
 
     @Column(unique = true)
-    private double Reference;
+    private String Reference;
 
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;

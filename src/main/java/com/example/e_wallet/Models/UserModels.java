@@ -30,9 +30,15 @@ public class UserModels {
     private  String KYC_Status;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
     private Date createTime;
 
     @OneToOne(mappedBy ="user",cascade = CascadeType.ALL)
     private WalletModel wallet;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createTime = new Date();
+    }
 
 }

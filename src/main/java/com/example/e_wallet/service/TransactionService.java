@@ -32,7 +32,7 @@ public class TransactionService {
         Transaction tx = new Transaction();
         tx.setAmount(amount);
         tx.setTransactionType(TransactionType.SUCCESS);
-        tx.setReference(Double.parseDouble("DEP-" + System.currentTimeMillis())); // Use String
+        tx.setReference("DEP-" + System.currentTimeMillis()); // Use String
         tx.setCreatedAt(new Date());
         tx.setWallet(wallet);
 
@@ -50,11 +50,10 @@ public class TransactionService {
 
         wallet.setBalance(wallet.getBalance() - amount);
         walletRepo.save(wallet);
-
         Transaction tx = new Transaction();
         tx.setAmount(amount);
         tx.setTransactionType(TransactionType.SUCCESS);
-        tx.setReference(Double.parseDouble("WTH-" + System.currentTimeMillis()));
+        tx.setReference("WTH-" + System.currentTimeMillis());
         tx.setCreatedAt(new Date());
         tx.setWallet(wallet);
 
@@ -82,14 +81,14 @@ public class TransactionService {
         Transaction debitTx = new Transaction();
         debitTx.setAmount(amount);
         debitTx.setTransactionType(TransactionType.SUCCESS);
-        debitTx.setReference(Double.parseDouble("TRF-OUT-" + System.currentTimeMillis()));
+        debitTx.setReference("TRF-OUT-" + System.currentTimeMillis());
         debitTx.setCreatedAt(new Date());
         debitTx.setWallet(senderWallet);
 
         Transaction creditTx = new Transaction();
         creditTx.setAmount(amount);
         creditTx.setTransactionType(TransactionType.SUCCESS);
-        creditTx.setReference(Double.parseDouble("TRF-IN-" + System.currentTimeMillis()));
+        creditTx.setReference("TRF-IN-" + System.currentTimeMillis());
         creditTx.setCreatedAt(new Date());
         creditTx.setWallet(receiverWallet);
 
